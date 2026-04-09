@@ -2,6 +2,10 @@
 
 这是一个纯前端静态网页项目，直接双击 `index.html` 就能打开，也可以部署到 GitHub Pages。
 
+## 本项目的石墩子
+
+![Stone Badge](https://stone.professorlee.work/api/stone/mornhussakuyo-hub/MBIT-Test)
+
 ## 文件说明
 
 - `index.html`：页面结构
