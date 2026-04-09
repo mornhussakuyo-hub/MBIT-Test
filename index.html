@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MBTI 测试</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bg-shape bg-shape-1"></div>
+  <div class="bg-shape bg-shape-2"></div>
+
+  <main class="container">
+    <section class="hero card" id="heroSection">
+      <span class="badge">目前仅是一个静态页面</span>
+      <h1>MBTI 性格测评</h1>
+      <p class="subtitle">
+        Developed by MornHus.
+      </p>
+
+      <div class="hero-grid">
+        <div class="hero-item">
+          <strong>16</strong>
+          <span>道基础题</span>
+        </div>
+        <div class="hero-item">
+          <strong>4</strong>
+          <span>个维度</span>
+        </div>
+        <div class="hero-item">
+          <strong>16</strong>
+          <span>种结果</span>
+        </div>
+      </div>
+
+      <button id="startBtn" class="primary-btn">开始测试</button>
+    </section>
+
+    <section class="quiz card hidden" id="quizSection">
+      <div class="quiz-top">
+        <div>
+          <p class="mini-title">当前进度</p>
+          <h2 id="questionCounter">第 1 / 16 题</h2>
+        </div>
+        <button id="restartBtnTop" class="ghost-btn">重新开始</button>
+      </div>
+
+      <div class="progress-bar">
+        <div id="progressFill" class="progress-fill"></div>
+      </div>
+
+      <div class="question-box">
+        <p class="dimension-tag" id="dimensionTag">维度：E / I</p>
+        <h3 id="questionText">题目内容</h3>
+      </div>
+
+      <div class="options" id="optionsBox"></div>
+    </section>
+
+    <section class="result card hidden" id="resultSection">
+      <p class="mini-title">你的测评结果</p>
+      <h2 id="resultType">INTJ</h2>
+      <p id="resultNickname" class="result-nickname">建筑师型</p>
+      <p id="resultDescription" class="result-description"></p>
+
+      <div class="dimension-panel">
+        <h3>四维得分</h3>
+        <div id="dimensionScores" class="dimension-scores"></div>
+      </div>
+
+      <div class="result-actions">
+        <button id="restartBtnBottom" class="primary-btn">再测一次</button>
+        <button id="copyBtn" class="ghost-btn">复制结果</button>
+      </div>
+    </section>
+  </main>
+
+
+
+  <script src="script.js"></script>
+</body>
+</html>
