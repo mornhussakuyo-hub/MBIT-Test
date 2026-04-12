@@ -1,1069 +1,567 @@
 // =========================
-// 你最常改的地方：从这里开始
+// QQTI 配置
 // =========================
 
-const TEST_TITLE = "MBTI 性格测评";
+const TEST_TITLE = "QQTI 原生社交人格测试";
+const HIDDEN_DIMENSION_LABEL = "维度：隐藏";
 
 const QUESTIONS = [
-  // EI（32题）
+  // G / L（群聊存在方式）10题
   {
-    dimension: "EI",
-    text: "周末到了，你更倾向于怎样恢复精力？",
+    dimension: "GL",
+    text: "一个不太熟的群突然聊到你很懂的话题，你会：",
     options: [
-      { text: "和朋友聚会、聊天、出去玩", type: "E" },
-      { text: "一个人安静待着，看书、刷剧或发呆", type: "I" }
+      { text: "直接下场开讲，顺便补充两句", type: "G" },
+      { text: "看别人说，必要时补一句", type: "L" }
     ]
   },
   {
-    dimension: "EI",
-    text: "来到一个陌生但热闹的聚会场合，你通常会？",
+    dimension: "GL",
+    text: "你在大群里的常见状态更像：",
     options: [
-      { text: "主动认识新朋友，很快融入气氛", type: "E" },
-      { text: "先观察环境，等熟悉后再慢慢交流", type: "I" }
+      { text: "经常发言，大家对我有印象", type: "G" },
+      { text: "长期潜水，想说时再说", type: "L" }
     ]
   },
   {
-    dimension: "EI",
-    text: "当你有一个很兴奋的想法时，你更可能？",
+    dimension: "GL",
+    text: "群里突然开始抽象整活，你通常：",
     options: [
-      { text: "立刻找人分享，一边说一边整理思路", type: "E" },
-      { text: "自己先想清楚，再决定要不要说出来", type: "I" }
+      { text: "立刻接梗，甚至加码", type: "G" },
+      { text: "默默看完，最多心里笑一下", type: "L" }
     ]
   },
   {
-    dimension: "EI",
-    text: "上课或开会时，你通常更像？",
+    dimension: "GL",
+    text: "面对 99+ 群消息，你更接近：",
     options: [
-      { text: "愿意随时发言、提问、参与讨论的人", type: "E" },
-      { text: "更喜欢先听、先想，再谨慎表达的人", type: "I" }
+      { text: "会翻一翻，看看发生了什么", type: "G" },
+      { text: "直接无视，当没看见", type: "L" }
     ]
   },
   {
-    dimension: "EI",
-    text: "如果连续几天都没有社交活动，你会觉得？",
+    dimension: "GL",
+    text: "别人说“你群里怎么不说话”，你的真实情况更像：",
     options: [
-      { text: "有点闷，想找人聊聊或出去走走", type: "E" },
-      { text: "挺舒服的，终于有属于自己的空间", type: "I" }
+      { text: "我其实挺常说的", type: "G" },
+      { text: "我确实更喜欢潜水", type: "L" }
     ]
   },
   {
-    dimension: "EI",
-    text: "和人相处时，你更常见的状态是？",
+    dimension: "GL",
+    text: "在群里看到有人说错了你熟悉的东西，你通常：",
     options: [
-      { text: "边说边想，交流本身会激发灵感", type: "E" },
-      { text: "先想后说，表达前最好心里有谱", type: "I" }
+      { text: "会出来纠正或补充", type: "G" },
+      { text: "看到了，但未必想出声", type: "L" }
     ]
   },
   {
-    dimension: "EI",
-    text: "在团队合作中，你更容易承担哪种角色？",
+    dimension: "GL",
+    text: "群里聊到一个你完全能接的话题时，你更可能：",
     options: [
-      { text: "联络、推动、让大家都参与进来", type: "E" },
-      { text: "独立思考、沉稳执行、默默完成关键部分", type: "I" }
+      { text: "立刻加入，顺着聊下去", type: "G" },
+      { text: "继续看，但不一定发", type: "L" }
     ]
   },
   {
-    dimension: "EI",
-    text: "你更喜欢哪种旅行方式？",
+    dimension: "GL",
+    text: "班群或社团群突然活跃起来时，你通常：",
     options: [
-      { text: "和一群人一起，边走边玩边认识人", type: "E" },
-      { text: "自己或和少数熟人，节奏安静自由", type: "I" }
+      { text: "会参与几句，至少刷一下存在感", type: "G" },
+      { text: "看一眼热闹就好，不太会加入", type: "L" }
     ]
   },
   {
-    dimension: "EI",
-    text: "当别人突然来找你聊天时，你通常会？",
+    dimension: "GL",
+    text: "群公告、群通知这种东西，你更像：",
     options: [
-      { text: "大多愿意接住话题，聊着聊着就热起来", type: "E" },
-      { text: "看心情和状态，不一定想立刻进入交流", type: "I" }
+      { text: "基本会看，偶尔还会提醒别人", type: "G" },
+      { text: "常常后知后觉，靠别人转告", type: "L" }
     ]
   },
   {
-    dimension: "EI",
-    text: "你更习惯通过什么方式整理情绪？",
+    dimension: "GL",
+    text: "你对自己在群里的定位更接近：",
     options: [
-      { text: "跟人倾诉、讨论、把感受说出来", type: "E" },
-      { text: "自己消化，写下来或静静想一会儿", type: "I" }
-    ]
-  },
-  {
-    dimension: "EI",
-    text: "在班级或社团活动中，你通常会？",
-    options: [
-      { text: "愿意出现在前面，带动气氛", type: "E" },
-      { text: "更喜欢在后面支持，不太想被关注", type: "I" }
-    ]
-  },
-  {
-    dimension: "EI",
-    text: "如果要认识新同学，你更偏向？",
-    options: [
-      { text: "主动开口，哪怕只是随便聊两句", type: "E" },
-      { text: "等有自然契机时再接触", type: "I" }
-    ]
-  },
-  {
-    dimension: "EI",
-    text: "你更容易在哪种环境里感到舒服？",
-    options: [
-      { text: "有互动、有声音、有人来人往的环境", type: "E" },
-      { text: "安静、不被打扰、能专注自己的环境", type: "I" }
-    ]
-  },
-  {
-    dimension: "EI",
-    text: "面对新的环境，你通常会怎么适应？",
-    options: [
-      { text: "先和人打成一片，熟悉关系网", type: "E" },
-      { text: "先熟悉规则和空间，再逐步建立联系", type: "I" }
-    ]
-  },
-  {
-    dimension: "EI",
-    text: "你和朋友见面后，常见感受是？",
-    options: [
-      { text: "聊完会更有精神", type: "E" },
-      { text: "聊久了会想一个人静静", type: "I" }
-    ]
-  },
-  {
-    dimension: "EI",
-    text: "在多人讨论里，你一般会？",
-    options: [
-      { text: "自然加入对话，想到什么说什么", type: "E" },
-      { text: "更多是听，确认有价值再开口", type: "I" }
-    ]
-  },
-  {
-    dimension: "EI",
-    text: "别人说你更像？",
-    options: [
-      { text: "外向、热络、容易接近", type: "E" },
-      { text: "安静、内敛、慢热", type: "I" }
-    ]
-  },
-  {
-    dimension: "EI",
-    text: "当你感到无聊时，你更可能？",
-    options: [
-      { text: "找人聊天、约饭、去外面转转", type: "E" },
-      { text: "自己找点事做，比如看视频或研究兴趣", type: "I" }
-    ]
-  },
-  {
-    dimension: "EI",
-    text: "在表达观点时，你通常？",
-    options: [
-      { text: "先说出来，再根据反馈调整", type: "E" },
-      { text: "先在脑子里推演完整，再表达", type: "I" }
-    ]
-  },
-  {
-    dimension: "EI",
-    text: "如果一整天都在和很多人互动，晚上你会？",
-    options: [
-      { text: "觉得充实热闹，状态还不错", type: "E" },
-      { text: "需要独处一会儿，重新充电", type: "I" }
-    ]
-  },
-  {
-    dimension: "EI",
-    text: "你更喜欢哪类合作方式？",
-    options: [
-      { text: "大家边讨论边推进", type: "E" },
-      { text: "先各自思考，再集中交流", type: "I" }
-    ]
-  },
-  {
-    dimension: "EI",
-    text: "你在朋友群里的状态通常是？",
-    options: [
-      { text: "经常发言、接梗、活跃气氛", type: "E" },
-      { text: "更多潜水，想说的时候再说", type: "I" }
-    ]
-  },
-  {
-    dimension: "EI",
-    text: "面对临时的社交邀请，你更常？",
-    options: [
-      { text: "觉得挺有意思，愿意去看看", type: "E" },
-      { text: "更想按原计划待着，不太想被打乱", type: "I" }
-    ]
-  },
-  {
-    dimension: "EI",
-    text: "你更容易从哪里获得能量？",
-    options: [
-      { text: "外部世界的人和活动", type: "E" },
-      { text: "自己的内心世界和个人空间", type: "I" }
-    ]
-  },
-  {
-    dimension: "EI",
-    text: "在课堂分组时，你通常会？",
-    options: [
-      { text: "主动和大家打招呼，迅速开工", type: "E" },
-      { text: "先听别人安排，再进入状态", type: "I" }
-    ]
-  },
-  {
-    dimension: "EI",
-    text: "当别人误解你时，你更倾向于？",
-    options: [
-      { text: "当场解释清楚，避免拖着", type: "E" },
-      { text: "先整理想法，等合适时机再说明", type: "I" }
-    ]
-  },
-  {
-    dimension: "EI",
-    text: "你对“热闹”的感觉更接近？",
-    options: [
-      { text: "热闹会让我兴奋", type: "E" },
-      { text: "热闹久了会让我疲惫", type: "I" }
-    ]
-  },
-  {
-    dimension: "EI",
-    text: "当你准备做一件新事时，你更可能？",
-    options: [
-      { text: "先找人一起做，更有动力", type: "E" },
-      { text: "自己先试试看，熟了再说", type: "I" }
-    ]
-  },
-  {
-    dimension: "EI",
-    text: "在陌生人面前，你通常？",
-    options: [
-      { text: "不太怕开口，聊几句问题不大", type: "E" },
-      { text: "会先有点拘谨，熟了才自然", type: "I" }
-    ]
-  },
-  {
-    dimension: "EI",
-    text: "你更喜欢哪种工作状态？",
-    options: [
-      { text: "环境里有人，偶尔还能交流一下", type: "E" },
-      { text: "尽量独立安静，不被频繁打断", type: "I" }
-    ]
-  },
-  {
-    dimension: "EI",
-    text: "你的朋友通常觉得你？",
-    options: [
-      { text: "比较主动、能带动别人", type: "E" },
-      { text: "比较沉稳、会自己思考很多", type: "I" }
-    ]
-  },
-  {
-    dimension: "EI",
-    text: "如果必须在“很多浅社交”和“少数深交流”中选一个，你更偏向？",
-    options: [
-      { text: "很多浅社交，认识更多人", type: "E" },
-      { text: "少数深交流，关系更深入", type: "I" }
+      { text: "气氛参与者", type: "G" },
+      { text: "安静观察者", type: "L" }
     ]
   },
 
-  // SN（32题）
+  // T / E（表达介质偏好）10题
   {
-    dimension: "SN",
-    text: "你更容易被哪类内容吸引？",
+    dimension: "TE",
+    text: "熟人给你发来一大段吐槽，你更可能：",
     options: [
-      { text: "具体、真实、可直接感知的信息", type: "S" },
-      { text: "概念、隐喻、背后的可能性", type: "N" }
+      { text: "认真打字接住", type: "T" },
+      { text: "先丢个精准表情包", type: "E" }
     ]
   },
   {
-    dimension: "SN",
-    text: "学习一个新知识时，你更偏向？",
+    dimension: "TE",
+    text: "你和熟人聊天时更常见的是：",
     options: [
-      { text: "先搞清楚定义、步骤、实际用法", type: "S" },
-      { text: "先理解整体框架和它意味着什么", type: "N" }
+      { text: "连续发很多字", type: "T" },
+      { text: "表情包和图片占很大比重", type: "E" }
     ]
   },
   {
-    dimension: "SN",
-    text: "看一幅画时，你更先注意到？",
+    dimension: "TE",
+    text: "你收藏表情包的状态更像：",
     options: [
-      { text: "颜色、构图、人物和具体细节", type: "S" },
-      { text: "它想表达的氛围和象征意义", type: "N" }
+      { text: "不算多，我主要还是打字", type: "T" },
+      { text: "表情包就是我的第二语言", type: "E" }
     ]
   },
   {
-    dimension: "SN",
-    text: "别人讲故事时，你更在意？",
+    dimension: "TE",
+    text: "解释误会时，你倾向于：",
     options: [
-      { text: "事情到底是怎么发生的", type: "S" },
-      { text: "这件事背后暗示了什么", type: "N" }
+      { text: "把话说明白", type: "T" },
+      { text: "越严肃越不想打很多字", type: "E" }
     ]
   },
   {
-    dimension: "SN",
-    text: "面对一个问题，你通常先想？",
+    dimension: "TE",
+    text: "哪种回复更像你：",
     options: [
-      { text: "眼前已知的事实和经验", type: "S" },
-      { text: "可能的模式和未来的发展", type: "N" }
+      { text: "“我认真讲一下这个事”", type: "T" },
+      { text: "“[图片]”", type: "E" }
     ]
   },
   {
-    dimension: "SN",
-    text: "你更喜欢哪种老师？",
+    dimension: "TE",
+    text: "别人说“你这图哪来的”，你更可能：",
     options: [
-      { text: "讲得清楚具体，例子很多", type: "S" },
-      { text: "能把知识讲出更大的图景和联系", type: "N" }
+      { text: "我其实主要还是文字派", type: "T" },
+      { text: "我库存很多，而且分门别类", type: "E" }
     ]
   },
   {
-    dimension: "SN",
-    text: "当别人说“有点怪”，你更倾向于？",
+    dimension: "TE",
+    text: "和朋友聊天时，你更喜欢：",
     options: [
-      { text: "追问具体哪里怪", type: "S" },
-      { text: "迅速联想到更深层的原因", type: "N" }
+      { text: "把意思完整表达出来", type: "T" },
+      { text: "一张图解决一切", type: "E" }
     ]
   },
   {
-    dimension: "SN",
-    text: "做题或解决任务时，你更信任？",
+    dimension: "TE",
+    text: "你在聊天里最常见的状态是：",
     options: [
-      { text: "已经验证过、稳妥有效的方法", type: "S" },
-      { text: "新的思路和未必常规的可能性", type: "N" }
+      { text: "靠打字推动对话", type: "T" },
+      { text: "靠表情包制造气氛", type: "E" }
     ]
   },
   {
-    dimension: "SN",
-    text: "你更像哪种人？",
+    dimension: "TE",
+    text: "你觉得自己更像：",
     options: [
-      { text: "记得住细节和实际情况", type: "S" },
-      { text: "容易想到灵感和抽象联系", type: "N" }
+      { text: "文字表达型", type: "T" },
+      { text: "图像表达型", type: "E" }
     ]
   },
   {
-    dimension: "SN",
-    text: "在讨论未来时，你更关注？",
+    dimension: "TE",
+    text: "别人情绪很复杂时，你更容易：",
     options: [
-      { text: "现实条件是否支持、步骤是否可行", type: "S" },
-      { text: "这个方向的潜力和想象空间", type: "N" }
-    ]
-  },
-  {
-    dimension: "SN",
-    text: "你更喜欢哪类书或影视作品？",
-    options: [
-      { text: "生活感强、细节真实、容易代入", type: "S" },
-      { text: "设定新奇、寓意丰富、引人联想", type: "N" }
-    ]
-  },
-  {
-    dimension: "SN",
-    text: "别人交代任务时，你更希望听到？",
-    options: [
-      { text: "明确的要求、步骤和标准", type: "S" },
-      { text: "目标、思路以及为什么要这么做", type: "N" }
-    ]
-  },
-  {
-    dimension: "SN",
-    text: "当你回忆一段经历时，你更容易记住？",
-    options: [
-      { text: "当时看到了什么、做了什么", type: "S" },
-      { text: "那段经历带来的感受和启发", type: "N" }
-    ]
-  },
-  {
-    dimension: "SN",
-    text: "你更容易信服哪种说法？",
-    options: [
-      { text: "有具体数据、案例和事实支撑", type: "S" },
-      { text: "能解释本质、逻辑和整体趋势", type: "N" }
-    ]
-  },
-  {
-    dimension: "SN",
-    text: "如果去一个新城市，你更感兴趣？",
-    options: [
-      { text: "当地的街道、美食、建筑和实际体验", type: "S" },
-      { text: "这座城市独特的气质和文化意象", type: "N" }
-    ]
-  },
-  {
-    dimension: "SN",
-    text: "在做计划时，你通常更依赖？",
-    options: [
-      { text: "已有信息和可见资源", type: "S" },
-      { text: "直觉判断和对趋势的预感", type: "N" }
-    ]
-  },
-  {
-    dimension: "SN",
-    text: "面对新点子时，你第一反应更常是？",
-    options: [
-      { text: "它具体怎么落地？", type: "S" },
-      { text: "它还能延伸出什么？", type: "N" }
-    ]
-  },
-  {
-    dimension: "SN",
-    text: "你更擅长哪一种？",
-    options: [
-      { text: "把细节做好，让事情稳定运行", type: "S" },
-      { text: "提出新方向，让事情有突破", type: "N" }
-    ]
-  },
-  {
-    dimension: "SN",
-    text: "听别人讲话时，你更常抓住？",
-    options: [
-      { text: "具体内容和原话", type: "S" },
-      { text: "言外之意和核心模式", type: "N" }
-    ]
-  },
-  {
-    dimension: "SN",
-    text: "当别人描述一个人时，你更想知道？",
-    options: [
-      { text: "他平时具体什么样", type: "S" },
-      { text: "他是什么类型的人", type: "N" }
-    ]
-  },
-  {
-    dimension: "SN",
-    text: "你更偏爱哪类任务？",
-    options: [
-      { text: "边界清楚、操作明确的任务", type: "S" },
-      { text: "开放性强、可以自由发挥的任务", type: "N" }
-    ]
-  },
-  {
-    dimension: "SN",
-    text: "在解决问题时，你更可能？",
-    options: [
-      { text: "一步一步确认现实情况", type: "S" },
-      { text: "先跳到更高层次看整体结构", type: "N" }
-    ]
-  },
-  {
-    dimension: "SN",
-    text: "你觉得自己更像？",
-    options: [
-      { text: "务实、踏实、重经验", type: "S" },
-      { text: "有想象力、跳跃、重启发", type: "N" }
-    ]
-  },
-  {
-    dimension: "SN",
-    text: "读一篇文章时，你更容易注意到？",
-    options: [
-      { text: "作者列举了哪些事实和例子", type: "S" },
-      { text: "作者真正想表达的深层观点", type: "N" }
-    ]
-  },
-  {
-    dimension: "SN",
-    text: "别人说“以后也许会这样”，你通常会？",
-    options: [
-      { text: "先看现在有没有依据", type: "S" },
-      { text: "开始想象这个变化会带来什么", type: "N" }
-    ]
-  },
-  {
-    dimension: "SN",
-    text: "你更喜欢哪种创作？",
-    options: [
-      { text: "贴近现实、细节充足的创作", type: "S" },
-      { text: "脑洞大开、富有象征感的创作", type: "N" }
-    ]
-  },
-  {
-    dimension: "SN",
-    text: "面对复杂信息时，你倾向于？",
-    options: [
-      { text: "先拆成一个个具体部分", type: "S" },
-      { text: "先找它们之间的隐藏联系", type: "N" }
-    ]
-  },
-  {
-    dimension: "SN",
-    text: "如果老师留了一个开放题，你更可能？",
-    options: [
-      { text: "从已有资料和实例入手", type: "S" },
-      { text: "从独特观点和新角度切入", type: "N" }
-    ]
-  },
-  {
-    dimension: "SN",
-    text: "你更容易被什么打动？",
-    options: [
-      { text: "眼前真实发生的细节", type: "S" },
-      { text: "一个更大的意义或愿景", type: "N" }
-    ]
-  },
-  {
-    dimension: "SN",
-    text: "你更习惯怎样理解世界？",
-    options: [
-      { text: "通过经验、观察和具体事实", type: "S" },
-      { text: "通过联想、抽象和模式识别", type: "N" }
-    ]
-  },
-  {
-    dimension: "SN",
-    text: "你更欣赏哪种表达方式？",
-    options: [
-      { text: "清楚直接、信息明确", type: "S" },
-      { text: "有层次、有隐喻、有想象空间", type: "N" }
-    ]
-  },
-  {
-    dimension: "SN",
-    text: "当你想到未来时，你更先看到？",
-    options: [
-      { text: "现实中的资源、限制和路径", type: "S" },
-      { text: "尚未成形但值得追逐的可能性", type: "N" }
+      { text: "用一段话认真回应", type: "T" },
+      { text: "先用表情包和气氛把场子接住", type: "E" }
     ]
   },
 
-  // TF（32题）
+  // P / D（社交温度）10题
   {
-    dimension: "TF",
-    text: "做决定时，你更看重？",
+    dimension: "PD",
+    text: "你看到很久没联系但关系不错的人上线，你会：",
     options: [
-      { text: "是否合理、公平、讲得通", type: "T" },
-      { text: "是否照顾到人的感受与关系", type: "F" }
+      { text: "主动去打招呼", type: "P" },
+      { text: "看到了也未必会开口", type: "D" }
     ]
   },
   {
-    dimension: "TF",
-    text: "朋友来向你倾诉烦恼时，你更倾向于？",
+    dimension: "PD",
+    text: "朋友情绪不对时，你通常：",
     options: [
-      { text: "帮他分析问题、提出解决方案", type: "T" },
-      { text: "先安慰和理解他的情绪", type: "F" }
+      { text: "会主动私聊问怎么了", type: "P" },
+      { text: "等对方愿意说再说", type: "D" }
     ]
   },
   {
-    dimension: "TF",
-    text: "你认为一个好规则最重要的是？",
+    dimension: "PD",
+    text: "你对“秒回”的态度更像：",
     options: [
-      { text: "逻辑一致，对所有人都适用", type: "T" },
-      { text: "有人情味，考虑具体处境", type: "F" }
+      { text: "看见且方便就会回", type: "P" },
+      { text: "经常拖一拖或者忘回", type: "D" }
     ]
   },
   {
-    dimension: "TF",
-    text: "评价一件事时，你更自然会？",
+    dimension: "PD",
+    text: "你更像哪种人：",
     options: [
-      { text: "判断它对不对、有效不有效", type: "T" },
-      { text: "判断它是否合情、会不会伤人", type: "F" }
+      { text: "会主动开启对话的人", type: "P" },
+      { text: "对方找我我会回，但我很少先开口", type: "D" }
     ]
   },
   {
-    dimension: "TF",
-    text: "如果你要指出别人问题，你更可能？",
+    dimension: "PD",
+    text: "聊得不错的人几天没找你，你更可能：",
     options: [
-      { text: "直接说重点，避免绕圈", type: "T" },
-      { text: "尽量委婉，顾及对方接受感受", type: "F" }
+      { text: "主动再找一次", type: "P" },
+      { text: "如果对方不来，我大概率也不会", type: "D" }
     ]
   },
   {
-    dimension: "TF",
-    text: "你更容易被哪种人认可？",
+    dimension: "PD",
+    text: "你在 QQ 上维系关系更像：",
     options: [
-      { text: "理性、客观、判断清晰的人", type: "T" },
-      { text: "温和、体贴、善解人意的人", type: "F" }
+      { text: "主动联系、主动分享", type: "P" },
+      { text: "随缘，断不断都行", type: "D" }
     ]
   },
   {
-    dimension: "TF",
-    text: "团队里发生分歧时，你更优先？",
+    dimension: "PD",
+    text: "别人主动来找你聊天，你通常：",
     options: [
-      { text: "把问题本身理清楚", type: "T" },
-      { text: "先避免关系恶化", type: "F" }
+      { text: "会尽量把对话接住", type: "P" },
+      { text: "能回，但不太会主动延长话题", type: "D" }
     ]
   },
   {
-    dimension: "TF",
-    text: "你更赞同哪句话？",
+    dimension: "PD",
+    text: "你更接近哪种社交节奏：",
     options: [
-      { text: "对事不对人最重要", type: "T" },
-      { text: "再对的事也要考虑怎么说", type: "F" }
+      { text: "愿意维持人与人之间的热度", type: "P" },
+      { text: "关系冷一点也没关系", type: "D" }
     ]
   },
   {
-    dimension: "TF",
-    text: "面对一个请求时，你更先想？",
+    dimension: "PD",
+    text: "你会不会突然想起某个人就去敲他：",
     options: [
-      { text: "这件事合理吗、应该吗", type: "T" },
-      { text: "拒绝会不会让对方难受", type: "F" }
+      { text: "会，而且不算少", type: "P" },
+      { text: "很少，通常想想就算了", type: "D" }
     ]
   },
   {
-    dimension: "TF",
-    text: "如果要选一个领导，你更偏好？",
+    dimension: "PD",
+    text: "你在聊天关系里更像：",
     options: [
-      { text: "标准明确、判断果断、重效率", type: "T" },
-      { text: "会照顾团队情绪、让人有归属感", type: "F" }
-    ]
-  },
-  {
-    dimension: "TF",
-    text: "当别人做事出错时，你第一反应更常是？",
-    options: [
-      { text: "分析错在哪、怎样避免再犯", type: "T" },
-      { text: "担心他会不会因此自责或难堪", type: "F" }
-    ]
-  },
-  {
-    dimension: "TF",
-    text: "你更难接受哪种情况？",
-    options: [
-      { text: "逻辑混乱、标准双标", type: "T" },
-      { text: "冷漠无情、伤害别人", type: "F" }
-    ]
-  },
-  {
-    dimension: "TF",
-    text: "做评价时，你通常更依赖？",
-    options: [
-      { text: "原则和事实", type: "T" },
-      { text: "价值观和共情", type: "F" }
-    ]
-  },
-  {
-    dimension: "TF",
-    text: "你更擅长哪一种？",
-    options: [
-      { text: "拆解问题、找出关键矛盾", type: "T" },
-      { text: "理解人心、调和关系", type: "F" }
-    ]
-  },
-  {
-    dimension: "TF",
-    text: "别人通常觉得你更像？",
-    options: [
-      { text: "理智冷静，讲道理", type: "T" },
-      { text: "温柔体贴，懂人情", type: "F" }
-    ]
-  },
-  {
-    dimension: "TF",
-    text: "在讨论中，你更在意自己是否？",
-    options: [
-      { text: "论证充分、推理严密", type: "T" },
-      { text: "没有伤害到别人、表达得合适", type: "F" }
-    ]
-  },
-  {
-    dimension: "TF",
-    text: "面对“规则”和“例外”，你更偏向？",
-    options: [
-      { text: "规则应尽量稳定一致", type: "T" },
-      { text: "特殊情况可以灵活处理", type: "F" }
-    ]
-  },
-  {
-    dimension: "TF",
-    text: "如果一个方案效率很高但会让少数人不舒服，你更倾向？",
-    options: [
-      { text: "如果整体最优，仍可接受", type: "T" },
-      { text: "应优先想办法降低对人的伤害", type: "F" }
-    ]
-  },
-  {
-    dimension: "TF",
-    text: "你更容易被哪类话打动？",
-    options: [
-      { text: "分析透彻、逻辑强的观点", type: "T" },
-      { text: "真诚温暖、能共鸣的话", type: "F" }
-    ]
-  },
-  {
-    dimension: "TF",
-    text: "与人争论时，你更关注？",
-    options: [
-      { text: "谁的观点更站得住脚", type: "T" },
-      { text: "争论会不会破坏关系", type: "F" }
-    ]
-  },
-  {
-    dimension: "TF",
-    text: "你更欣赏哪种反馈方式？",
-    options: [
-      { text: "直接指出问题，便于改进", type: "T" },
-      { text: "先肯定再建议，比较照顾感受", type: "F" }
-    ]
-  },
-  {
-    dimension: "TF",
-    text: "当你做选择时，哪种后悔更让你难受？",
-    options: [
-      { text: "选择不够理性，导致结果变差", type: "T" },
-      { text: "选择伤害了别人，留下情感遗憾", type: "F" }
-    ]
-  },
-  {
-    dimension: "TF",
-    text: "你更认可哪种“正确”？",
-    options: [
-      { text: "符合逻辑和原则的正确", type: "T" },
-      { text: "兼顾善意与人性的正确", type: "F" }
-    ]
-  },
-  {
-    dimension: "TF",
-    text: "面对冲突时，你更可能？",
-    options: [
-      { text: "抽离情绪，就事论事", type: "T" },
-      { text: "体会各方感受，试着缓和", type: "F" }
-    ]
-  },
-  {
-    dimension: "TF",
-    text: "你觉得评价一个人更该看？",
-    options: [
-      { text: "能力、原则、判断力", type: "T" },
-      { text: "品格、善意、是否会体谅他人", type: "F" }
-    ]
-  },
-  {
-    dimension: "TF",
-    text: "如果朋友做了你不认同的事，你更常？",
-    options: [
-      { text: "直接指出问题所在", type: "T" },
-      { text: "先理解他为什么会这么做", type: "F" }
-    ]
-  },
-  {
-    dimension: "TF",
-    text: "你更像哪种安慰方式？",
-    options: [
-      { text: "“我们来看看问题怎么解决。”", type: "T" },
-      { text: "“没关系，我理解你现在很难受。”", type: "F" }
-    ]
-  },
-  {
-    dimension: "TF",
-    text: "在合作中，你更看重？",
-    options: [
-      { text: "分工合理、效率高、标准清晰", type: "T" },
-      { text: "气氛和谐、彼此舒服、互相支持", type: "F" }
-    ]
-  },
-  {
-    dimension: "TF",
-    text: "你更容易被批评成？",
-    options: [
-      { text: "太理性、太直接", type: "T" },
-      { text: "太心软、太顾及情面", type: "F" }
-    ]
-  },
-  {
-    dimension: "TF",
-    text: "你觉得“成熟”更像是？",
-    options: [
-      { text: "能客观判断，不被情绪带跑", type: "T" },
-      { text: "能理解别人，也能善待关系", type: "F" }
-    ]
-  },
-  {
-    dimension: "TF",
-    text: "面对公平问题时，你更重视？",
-    options: [
-      { text: "标准统一，不因人而异", type: "T" },
-      { text: "考虑每个人的处境是否真正被看见", type: "F" }
-    ]
-  },
-  {
-    dimension: "TF",
-    text: "如果必须二选一，你更希望自己是？",
-    options: [
-      { text: "判断准确的人", type: "T" },
-      { text: "让人安心的人", type: "F" }
+      { text: "维系者", type: "P" },
+      { text: "回应者", type: "D" }
     ]
   },
 
-  // JP（32题）
+  // O / C（网络气质）10题
   {
-    dimension: "JP",
-    text: "你更喜欢哪种生活状态？",
+    dimension: "OC",
+    text: "你的 QQ 头像、昵称、个签通常：",
     options: [
-      { text: "提前安排好，心里有数", type: "J" },
-      { text: "保留弹性，想到哪做到哪", type: "P" }
+      { text: "经常换，能体现我最近状态", type: "O" },
+      { text: "很久不动，像账号注册那天定住了", type: "C" }
     ]
   },
   {
-    dimension: "JP",
-    text: "面对一项任务，你更倾向于？",
+    dimension: "OC",
+    text: "你发空间的状态更接近：",
     options: [
-      { text: "尽早开始，按计划推进", type: "J" },
-      { text: "临近截止时集中冲刺", type: "P" }
+      { text: "想到什么发什么，偶尔经营一下", type: "O" },
+      { text: "几乎不发，像空间不存在", type: "C" }
     ]
   },
   {
-    dimension: "JP",
-    text: "房间或桌面通常更接近？",
+    dimension: "OC",
+    text: "如果别人点进你的资料卡，你希望对方看到的是：",
     options: [
-      { text: "有一定秩序，东西大致各归其位", type: "J" },
-      { text: "看起来随意，但自己知道东西在哪", type: "P" }
+      { text: "很鲜明、很有我自己的味道", type: "O" },
+      { text: "最好普通一点，别看出太多", type: "C" }
     ]
   },
   {
-    dimension: "JP",
-    text: "出去玩时，你更希望？",
+    dimension: "OC",
+    text: "你对“把日常发出来”这件事：",
     options: [
-      { text: "行程大致定好，心里踏实", type: "J" },
-      { text: "边走边看，随时改主意", type: "P" }
+      { text: "挺自然，分享欲不低", type: "O" },
+      { text: "更愿意私下说，不想公开摆出来", type: "C" }
     ]
   },
   {
-    dimension: "JP",
-    text: "你对“待办事项清单”的态度通常是？",
+    dimension: "OC",
+    text: "你会不会在头像、个签、空间里埋小心思：",
     options: [
-      { text: "很有必要，能让我安心", type: "J" },
-      { text: "偶尔有用，但不想被它束缚", type: "P" }
+      { text: "会，懂的人会懂", type: "O" },
+      { text: "不会，我懒得搞这些", type: "C" }
     ]
   },
   {
-    dimension: "JP",
-    text: "如果计划临时被打乱，你更常感到？",
+    dimension: "OC",
+    text: "哪句话最像你：",
     options: [
-      { text: "不舒服，想尽快重新安排", type: "J" },
-      { text: "还好，正好随机应变", type: "P" }
+      { text: "我的号一看就挺有我味道", type: "O" },
+      { text: "我的账号像一座互联网遗址", type: "C" }
     ]
   },
   {
-    dimension: "JP",
-    text: "面对未来安排，你更喜欢？",
+    dimension: "OC",
+    text: "你更在意自己的线上外壳吗：",
     options: [
-      { text: "尽早决定，减少不确定感", type: "J" },
-      { text: "先不定死，留着以后再说", type: "P" }
+      { text: "会在意，至少得有点个人风格", type: "O" },
+      { text: "不太在意，能用就行", type: "C" }
     ]
   },
   {
-    dimension: "JP",
-    text: "你做事时更倾向于？",
+    dimension: "OC",
+    text: "别人看你的空间或资料页时，你更希望：",
     options: [
-      { text: "按步骤完成，一项项收尾", type: "J" },
-      { text: "多线并行，看状态切换", type: "P" }
+      { text: "能感受到这是我", type: "O" },
+      { text: "别看出太多我的近况", type: "C" }
     ]
   },
   {
-    dimension: "JP",
-    text: "你更享受哪种感觉？",
+    dimension: "OC",
+    text: "你对“网络展示自己”的态度更像：",
     options: [
-      { text: "事情被安排妥当、逐步完成", type: "J" },
-      { text: "充满变化，随时有新可能", type: "P" }
+      { text: "适当展示挺正常", type: "O" },
+      { text: "能少展示就少展示", type: "C" }
     ]
   },
   {
-    dimension: "JP",
-    text: "对截止日期，你通常？",
+    dimension: "OC",
+    text: "你觉得你的账号更像：",
     options: [
-      { text: "把它当明确节点，提前准备", type: "J" },
-      { text: "把它当最后边界，靠近时再发力", type: "P" }
-    ]
-  },
-  {
-    dimension: "JP",
-    text: "你更像哪类人？",
-    options: [
-      { text: "喜欢收束、定下来、做决定", type: "J" },
-      { text: "喜欢开放、探索、保留选择", type: "P" }
-    ]
-  },
-  {
-    dimension: "JP",
-    text: "买东西时，你更可能？",
-    options: [
-      { text: "提前比较后快速决定", type: "J" },
-      { text: "边看边挑，可能最后一刻才定", type: "P" }
-    ]
-  },
-  {
-    dimension: "JP",
-    text: "当手上有很多事时，你会？",
-    options: [
-      { text: "先排优先级，逐个解决", type: "J" },
-      { text: "凭当下感觉，先做最想做的", type: "P" }
-    ]
-  },
-  {
-    dimension: "JP",
-    text: "你通常怎样开始一天？",
-    options: [
-      { text: "大致知道今天要做什么", type: "J" },
-      { text: "看情况决定，顺其自然", type: "P" }
-    ]
-  },
-  {
-    dimension: "JP",
-    text: "如果别人问你“什么时候有空”，你更习惯？",
-    options: [
-      { text: "看安排后给出明确时间", type: "J" },
-      { text: "先别定太死，到时候再说", type: "P" }
-    ]
-  },
-  {
-    dimension: "JP",
-    text: "写作业或做项目时，你更偏向？",
-    options: [
-      { text: "先搭结构和时间表", type: "J" },
-      { text: "先随手开始，边做边成型", type: "P" }
-    ]
-  },
-  {
-    dimension: "JP",
-    text: "你更喜欢哪种工作节奏？",
-    options: [
-      { text: "稳定、有序、可预期", type: "J" },
-      { text: "灵活、多变、有新鲜感", type: "P" }
-    ]
-  },
-  {
-    dimension: "JP",
-    text: "面对选择时，你通常？",
-    options: [
-      { text: "希望尽快定下来，避免拖着", type: "J" },
-      { text: "倾向再看看，说不定有更好的", type: "P" }
-    ]
-  },
-  {
-    dimension: "JP",
-    text: "你的日常更接近？",
-    options: [
-      { text: "有自己的规律和节奏", type: "J" },
-      { text: "经常根据兴趣临时变化", type: "P" }
-    ]
-  },
-  {
-    dimension: "JP",
-    text: "你更难忍受哪种情况？",
-    options: [
-      { text: "事情悬而未决、没有结论", type: "J" },
-      { text: "安排过死、没有自由空间", type: "P" }
-    ]
-  },
-  {
-    dimension: "JP",
-    text: "旅行收拾行李时，你通常？",
-    options: [
-      { text: "提前列清单，基本不会遗漏", type: "J" },
-      { text: "差不多就行，缺了再想办法", type: "P" }
-    ]
-  },
-  {
-    dimension: "JP",
-    text: "你更欣赏哪种做事方式？",
-    options: [
-      { text: "有条理、讲规划、执行稳定", type: "J" },
-      { text: "机动灵活、随机应变、创意十足", type: "P" }
-    ]
-  },
-  {
-    dimension: "JP",
-    text: "临时出现一个有趣机会时，你更可能？",
-    options: [
-      { text: "先看会不会打乱原计划", type: "J" },
-      { text: "觉得有趣就先试试再说", type: "P" }
-    ]
-  },
-  {
-    dimension: "JP",
-    text: "处理邮件、消息或通知时，你更倾向于？",
-    options: [
-      { text: "尽快清掉，保持整洁", type: "J" },
-      { text: "有空再处理，不急于全部归零", type: "P" }
-    ]
-  },
-  {
-    dimension: "JP",
-    text: "你做完一件事后，更希望？",
-    options: [
-      { text: "立刻收尾归档，彻底结束", type: "J" },
-      { text: "先放着，之后说不定还会改", type: "P" }
-    ]
-  },
-  {
-    dimension: "JP",
-    text: "你面对任务更常见的状态是？",
-    options: [
-      { text: "先完成再轻松", type: "J" },
-      { text: "先感受自由，再靠灵感推进", type: "P" }
-    ]
-  },
-  {
-    dimension: "JP",
-    text: "在学习上，你更喜欢？",
-    options: [
-      { text: "固定进度，按部就班地推进", type: "J" },
-      { text: "根据兴趣和状态灵活安排", type: "P" }
-    ]
-  },
-  {
-    dimension: "JP",
-    text: "你对“惊喜安排”的反应通常是？",
-    options: [
-      { text: "如果没提前说，多少会有点不适", type: "J" },
-      { text: "挺有意思，意外也可能很好玩", type: "P" }
-    ]
-  },
-  {
-    dimension: "JP",
-    text: "你更喜欢怎样做决定？",
-    options: [
-      { text: "收集足够信息后尽快拍板", type: "J" },
-      { text: "持续观察，等最后再决定", type: "P" }
-    ]
-  },
-  {
-    dimension: "JP",
-    text: "你更常把自己形容为？",
-    options: [
-      { text: "规划型，喜欢心里有谱", type: "J" },
-      { text: "探索型，喜欢保持弹性", type: "P" }
-    ]
-  },
-  {
-    dimension: "JP",
-    text: "当别人催你确定安排时，你更可能？",
-    options: [
-      { text: "愿意尽快给出确定答复", type: "J" },
-      { text: "希望再等等，保留余地", type: "P" }
-    ]
-  },
-  {
-    dimension: "JP",
-    text: "如果只能选一种生活方式，你更偏向？",
-    options: [
-      { text: "有结构、有掌控感的生活", type: "J" },
-      { text: "有变化、有自由度的生活", type: "P" }
+      { text: "一个有装饰、有痕迹的小房间", type: "O" },
+      { text: "一个只保留最低功能的壳子", type: "C" }
     ]
   }
 ];
 
+QUESTIONS.splice(0, QUESTIONS.length, ...[
+  { dimension: "GL", type: "G", text: "在群里看到自己熟悉的话题时，我通常会主动接话。" },
+  { dimension: "GL", type: "L", text: "除非被点名，不然我在大群里更习惯潜水。" },
+  { dimension: "GL", type: "G", text: "群里气氛冷下来时，我会想办法把话题续上。" },
+  { dimension: "GL", type: "L", text: "即使群消息很多，我也常常只看不回。" },
+  { dimension: "GL", type: "G", text: "看到别人聊到我很懂的内容，我会忍不住补充几句。" },
+  { dimension: "GL", type: "L", text: "我更喜欢先观察群里氛围，再决定要不要发言。" },
+  { dimension: "GL", type: "G", text: "班群或社团群一热闹起来，我通常会参与进去。" },
+  { dimension: "GL", type: "L", text: "大多数时候，我在群里的存在感并不高。" },
+  { dimension: "GL", type: "G", text: "我会留意群通知或群公告，必要时还会提醒别人。" },
+  { dimension: "GL", type: "L", text: "我在群里更像安静的围观者，而不是推动话题的人。" },
+  { dimension: "GL", type: "G", text: "如果有人把我熟悉的事说错了，我一般会出来纠正。" },
+  { dimension: "GL", type: "L", text: "就算群里聊到我感兴趣的话题，我也未必会加入。" },
 
+  { dimension: "TE", type: "T", text: "遇到复杂的聊天情境时，我更习惯用文字讲清楚。" },
+  { dimension: "TE", type: "E", text: "一张表情包或图片，常常比我打一大段字更有效。" },
+  { dimension: "TE", type: "T", text: "和熟人聊天时，我经常会连续发好几句完整的话。" },
+  { dimension: "TE", type: "E", text: "我收藏表情包这件事，本身就像一种表达方式。" },
+  { dimension: "TE", type: "T", text: "解释误会时，我会尽量把来龙去脉说明白。" },
+  { dimension: "TE", type: "E", text: "我在聊天里很依赖表情、截图、梗图这些非文字内容。" },
+  { dimension: "TE", type: "T", text: "安慰别人时，我更倾向于认真组织语言回应。" },
+  { dimension: "TE", type: "E", text: "很多时候，我发图的速度比打字还快。" },
+  { dimension: "TE", type: "T", text: "如果要认真聊一件事，我会希望对方看见完整的文字表达。" },
+  { dimension: "TE", type: "E", text: "我聊天时制造气氛，更多靠图和表情而不是长文字。" },
+  { dimension: "TE", type: "T", text: "我觉得自己更擅长把意思说清楚，而不是只丢一个梗。" },
+  { dimension: "TE", type: "E", text: "对我来说，图像化表达比长篇解释更自然。" },
+
+  { dimension: "PD", type: "P", text: "想到某个朋友时，我会主动去找他聊两句。" },
+  { dimension: "PD", type: "D", text: "就算关系不错的人上线了，我也不一定会先打招呼。" },
+  { dimension: "PD", type: "P", text: "朋友状态不对时，我通常会主动私聊问问。" },
+  { dimension: "PD", type: "D", text: "我经常看见消息后拖一会儿，甚至忘了回。" },
+  { dimension: "PD", type: "P", text: "我愿意花心思维持关系里的热度和联系感。" },
+  { dimension: "PD", type: "D", text: "如果别人不来找我，我也常常就顺其自然不联系。" },
+  { dimension: "PD", type: "P", text: "别人主动来聊天时，我通常会尽量把对话接住。" },
+  { dimension: "PD", type: "D", text: "我更像“回应型”社交，而不是“开启型”社交。" },
+  { dimension: "PD", type: "P", text: "我会主动分享近况、链接或小事，让联系不断线。" },
+  { dimension: "PD", type: "D", text: "我不太会突然想到一个人就去敲他。" },
+  { dimension: "PD", type: "P", text: "我会在意别人聊天时有没有被冷到或落下。" },
+  { dimension: "PD", type: "D", text: "对我来说，关系稍微冷一点也没什么所谓。" },
+
+  { dimension: "OC", type: "O", text: "我的头像、昵称或签名会随着状态和兴趣变化。" },
+  { dimension: "OC", type: "C", text: "我的账号资料很久不动也完全不影响我使用。" },
+  { dimension: "OC", type: "O", text: "我希望别人点进我的资料时，能感觉到“这就是我”。" },
+  { dimension: "OC", type: "C", text: "我更喜欢把表达留在私下，而不是公开展示在账号上。" },
+  { dimension: "OC", type: "O", text: "我会在空间、动态或资料卡里留下自己的风格痕迹。" },
+  { dimension: "OC", type: "C", text: "我的线上账号更像工具，而不是自我展示的一部分。" },
+  { dimension: "OC", type: "O", text: "我愿意适度公开自己的喜好、审美或最近状态。" },
+  { dimension: "OC", type: "C", text: "我不太在意别人看到我账号时会留下什么印象。" },
+  { dimension: "OC", type: "O", text: "我会认真挑头像、背景或签名这种小细节。" },
+  { dimension: "OC", type: "C", text: "如果能少展示自己，我通常会选择少展示。" },
+  { dimension: "OC", type: "O", text: "我的账号页面对我来说像一个有布置感的小空间。" },
+  { dimension: "OC", type: "C", text: "我的资料页面越简洁、越低存在感，我越舒服。" }
+]);
+
+const RESPONSE_OPTIONS = [
+  { text: "简直就是我", weight: 2 },
+  { text: "和我有点像", weight: 1 },
+  { text: "不清楚", weight: 0 },
+  { text: "和我不太像", weight: -1 },
+  { text: "我绝对不这样", weight: -2 }
+];
+
+const OPPOSITE_TYPES = {
+  G: "L",
+  L: "G",
+  T: "E",
+  E: "T",
+  P: "D",
+  D: "P",
+  O: "C",
+  C: "O"
+};
 
 const RESULT_MAP = {
-  INTJ: { nickname: "建筑师型", description: "你通常独立、理性、擅长从长远视角思考问题。你喜欢建立自己的方法体系，也很重视效率与逻辑。" },
-  INTP: { nickname: "逻辑学家型", description: "你喜欢思考本质，乐于分析复杂问题。你通常好奇心很强，喜欢自由探索，而不是被固定框架束缚。" },
-  ENTJ: { nickname: "指挥官型", description: "你通常果断、有组织能力，喜欢推进事情发生。你擅长从目标出发统筹资源，也有较强的领导倾向。" },
-  ENTP: { nickname: "辩论家型", description: "你通常反应快、点子多，喜欢挑战旧观点。你享受脑力碰撞，也经常能看到别人没注意到的新可能。" },
-  INFJ: { nickname: "提倡者型", description: "你通常安静但有洞察力，既关注意义，也关注他人感受。你往往有较强的理想感与内在原则。" },
-  INFP: { nickname: "调停者型", description: "你通常真诚、敏感、重视价值观。你往往有自己的内心世界，也很在意生活是否和内在认同一致。" },
-  ENFJ: { nickname: "主人公型", description: "你通常热情、善于理解他人，也愿意带动群体。你常常希望让周围的人变得更好。" },
-  ENFP: { nickname: "竞选者型", description: "你通常活力强、富有想象力，容易被新鲜事物吸引。你很看重表达、自我延展和人与人之间的连接。" },
-  ISTJ: { nickname: "物流师型", description: "你通常稳重、务实、可靠，重视秩序和责任。你做事常常很踏实，也比较值得信赖。" },
-  ISFJ: { nickname: "守卫者型", description: "你通常细致、体贴、愿意默默支持他人。你很重视稳定、安全感与实际照顾。" },
-  ESTJ: { nickname: "总经理型", description: "你通常执行力强、讲原则、擅长组织事务。你倾向于用清晰规则推动集体高效运转。" },
-  ESFJ: { nickname: "执政官型", description: "你通常热心、负责、重视群体关系。你善于协调他人，也很关注大家是否都被照顾到。" },
-  ISTP: { nickname: "鉴赏家型", description: "你通常冷静、灵活、擅长动手和快速判断。你往往不喜欢被束缚，更愿意通过实践来理解世界。" },
-  ISFP: { nickname: "探险家型", description: "你通常温和、审美敏锐、重视个人体验。你倾向于低调地表达自我，同时保持内在自由。" },
-  ESTP: { nickname: "企业家型", description: "你通常大胆、直接、行动快，喜欢真实刺激的体验。你常能在变化中迅速抓住机会。" },
-  ESFP: { nickname: "表演者型", description: "你通常开朗、热情、感染力强，喜欢让生活有趣起来。你重视当下体验，也很容易带动别人。" }
+  GTPO: {
+    nickname: "群聊烟花型",
+    description: "你在 QQ 生态里存在感很强，能聊、能接梗、能把气氛点起来。你不是单纯话多，而是很懂什么时候该出现、怎样让聊天活起来。",
+    groupStyle: "群里几乎常驻，看到有意思的话题很容易加入，属于能把冷场聊热的人。",
+    chatStyle: "私聊不怎么拘谨，愿意主动开口，也很少让对话彻底掉地上。",
+    impression: "朋友觉得你热闹、好接近、很有网感，跟你聊天不容易无聊。",
+    quote: "“我来一句。”",
+    profileStyle: "头像、昵称、个签通常都带点你自己的味道，资料卡不太可能完全死气沉沉。"
+  },
+  GTPC: {
+    nickname: "文字话痨型",
+    description: "你更像是靠文字存在的人。群里活跃、私下也主动，但你的核心武器不是表情包，而是能把话接住、把意思说清楚。",
+    groupStyle: "群里会说话，而且说得成段，属于大家一看就知道你在线的类型。",
+    chatStyle: "私聊里表达欲很稳定，愿意认真展开一个话题。",
+    impression: "朋友觉得你很能聊，而且不是乱聊，是那种真能把话说明白的人。",
+    quote: "“你听我说，这个事是这样的。”",
+    profileStyle: "资料卡未必花哨，但会有一点属于你自己的风格，不是纯空白号。"
+  },
+  GTDO: {
+    nickname: "热闹围观指挥官",
+    description: "你喜欢出现在热闹里，但并不等于你对所有人都热情。你会在群里发光，却不一定愿意在私下维持高频连接。",
+    groupStyle: "群里很容易刷到你，尤其在话题对胃口的时候，存在感相当强。",
+    chatStyle: "私聊不一定主动，你更像是把能量放在公共场域的人。",
+    impression: "别人会觉得你很会来事，但也有一点不容易真正贴近的距离感。",
+    quote: "“这个我必须说一句。”",
+    profileStyle: "外在形象通常不差，账号看得出有经营，但不会把私人信息摊得太满。"
+  },
+  GTDC: {
+    nickname: "冷面群聊驻民",
+    description: "你不是完全潜水，你只是有自己的上线条件。群里你会说话，但只在自己觉得值得开口的时候出现，平时并不主动贴近别人。",
+    groupStyle: "会出现，但不乱出现；会发言，但一般都是自己觉得有必要的时候。",
+    chatStyle: "私聊偏克制，对话更多是回应而不是主动发动。",
+    impression: "别人觉得你不算难相处，但有自己的边界，不会轻易把热情铺开。",
+    quote: "“我觉得可以这样。”",
+    profileStyle: "资料卡比较稳，可能不怎么折腾，但也不至于像废弃账号。"
+  },
+  GEPO: {
+    nickname: "表情包气氛核心",
+    description: "你靠图、梗和即时反应维持存在感。你很懂互联网表达，也很懂怎么用最少的字打出最大的效果。",
+    groupStyle: "一有梗图局你就容易上线，群聊效果往往是你靠几张图打出来的。",
+    chatStyle: "私聊也很自然，会主动互动，很多情绪都是靠表情包表达。",
+    impression: "朋友觉得你很有节目效果，聊天氛围总能被你提起来。",
+    quote: "“[图片]”",
+    profileStyle: "头像和空间往往也挺有味道，审美和梗感会体现在账号外壳上。"
+  },
+  GEPC: {
+    nickname: "抽象包收藏家",
+    description: "你属于很会互动的人，只不过你表达的主要介质不是长文，而是图、包、梗和各种互联网残片。你看起来轻松，其实很会维持存在感。",
+    groupStyle: "群里一旦出现适合接图的时机，你往往能精准命中。",
+    chatStyle: "私聊里不一定长篇大论，但会持续给回应，让对方知道你在。",
+    impression: "朋友觉得你很会玩梗，也很有陪伴感，不算高压社交型。",
+    quote: "“等等，我给你找张图。”",
+    profileStyle: "账号整体不一定高调，但细看通常有你自己的趣味。"
+  },
+  GEDO: {
+    nickname: "高冷整活王",
+    description: "你会整活，也能制造效果，但你并不想把自己变成过度热络的人。你像是偶尔出手，一出手就很有杀伤力的互联网角色。",
+    groupStyle: "群里会突然丢出很准的一句或一张图，把全场节奏带偏。",
+    chatStyle: "私聊并不黏人，社交主动度有限，更像选择性连接。",
+    impression: "别人会觉得你挺有意思，但也知道你不是谁都亲近。",
+    quote: "“行，这个我有图。”",
+    profileStyle: "资料卡通常有一点风格，但保留距离，不会把自己完全摊开。"
+  },
+  GEDC: {
+    nickname: "幽灵梗图投放器",
+    description: "你平时像失踪人口，偶尔出现时却总能精准投下一张图或一句梗，然后再度消失。你不是没存在感，而是存在感非常集中。",
+    groupStyle: "大部分时间潜水，但一出手往往就能被记住。",
+    chatStyle: "私聊偏随缘，不算主动，也不太会连续高频输出。",
+    impression: "朋友觉得你神出鬼没，但又确实很有个人风格。",
+    quote: "“6。”",
+    profileStyle: "账号可能略显荒凉，但会在某些地方残留很强的个人痕迹。"
+  },
+  LTPO: {
+    nickname: "私聊小太阳",
+    description: "你不一定爱在大群里刷存在，但在熟人私聊里很真诚、很稳定，也愿意主动靠近别人。你更像把温度放在一对一连接里的人。",
+    groupStyle: "群里不是绝对活跃型，更倾向于看情况发言。",
+    chatStyle: "私聊很认真，也愿意主动发起对话，是那种容易聊出熟感的人。",
+    impression: "朋友会觉得你表面没那么闹，但相处下来很暖、很好接近。",
+    quote: "“在吗，我突然想到你。”",
+    profileStyle: "资料卡会有一定风格，整体给人比较舒服、比较活的感觉。"
+  },
+  LTPC: {
+    nickname: "温和长消息型",
+    description: "你更适合深一点、稳一点的连接。你不依赖热闹，也不靠大量图片取胜，而是靠认真、平和、持续的文字交流建立存在感。",
+    groupStyle: "群里存在感不算特别高，更多是安静观察，偶尔说几句有内容的话。",
+    chatStyle: "私聊时很能聊，而且会认真组织语言，属于适合深聊的类型。",
+    impression: "朋友觉得你慢热但真诚，一旦熟起来会发现你很有内容。",
+    quote: "“我慢慢跟你说。”",
+    profileStyle: "资料卡未必很高调，但会有一点温和、清晰、耐看的个人痕迹。"
+  },
+  LTDO: {
+    nickname: "礼貌已读型",
+    description: "你既不爱群里高调出现，也不太会主动扩展社交，但你并不是完全断联的人。你更像在维持一种有边界的、尽量体面的在线状态。",
+    groupStyle: "群里更多是旁观者，必要时会说话，但不抢存在感。",
+    chatStyle: "私聊里会回，也基本讲理，但主动程度不高。",
+    impression: "别人会觉得你不难接触，只是偏冷静、偏克制。",
+    quote: "“看到了。”",
+    profileStyle: "账号风格偏稳，不怎么折腾，也不太会高频公开展示近况。"
+  },
+  LTDC: {
+    nickname: "深海信件型",
+    description: "你像那种不常浮出水面的人。平时安静、克制、不爱展示，但真正说话时通常是有内容、有分量的。",
+    groupStyle: "群里潜水偏多，开口频率低，但说的话往往不空。",
+    chatStyle: "私聊回复节奏不一定快，不过认真聊起来会很真诚。",
+    impression: "朋友觉得你不吵不闹，有距离感，但并不空洞。",
+    quote: "“我想了一下。”",
+    profileStyle: "资料卡低存在感，像是故意把自己收得很干净。"
+  },
+  LEPO: {
+    nickname: "表情软糖型",
+    description: "你不一定是最会说的，但你很会给情绪反馈。你靠轻盈的互动、表情、图片和恰到好处的回应维持人与人之间的温度。",
+    groupStyle: "群里不一定高强度发言，但会用轻巧的方式参与进来。",
+    chatStyle: "私聊里挺主动，也愿意陪伴，只是表达更偏图像和情绪。",
+    impression: "别人会觉得你可爱、轻松、不压迫，跟你聊天没什么负担。",
+    quote: "“哈哈哈哈这个好。”",
+    profileStyle: "头像、空间、个签可能都有点柔软的趣味，不一定夸张，但挺有感觉。"
+  },
+  LEPC: {
+    nickname: "贴图陪伴型",
+    description: "你是那种不需要很多字，也能让人知道你在的人。你擅长用轻量方式维持连接，不高调，但不冷漠。",
+    groupStyle: "群里更像轻量参与者，不会抢中心位，但也不是真的完全消失。",
+    chatStyle: "私聊会回应，也会发图、发表情，属于陪伴感强于输出欲的人。",
+    impression: "朋友觉得你温和、不折腾，虽然不吵，但并不难亲近。",
+    quote: "“给你一个表情。”",
+    profileStyle: "资料卡整体偏收敛，但会有一些细小的个人趣味藏在里面。"
+  },
+  LEDO: {
+    nickname: "冷淡猫猫型",
+    description: "你更像一种有礼貌但不热络的存在。你不是完全不理人，只是社交阈值高，表达也尽量简短，很多时候靠最低限度回应维持联络。",
+    groupStyle: "群里偏潜水，偶尔出现时更像扔下一句简短态度。",
+    chatStyle: "私聊不太主动，回复也常常偏短，但并不一定是讨厌对方。",
+    impression: "别人会觉得你有点冷，但也知道你不是恶意，只是懒得展开。",
+    quote: "“嗯。”",
+    profileStyle: "账号给人的感觉偏干净、偏克制，不太爱展示自己。"
+  },
+  LEDC: {
+    nickname: "离线幽灵型",
+    description: "你像一个长期挂在列表里、但很少真正上线的人。你不爱展示、不爱主动、不爱高频回应，存在感低，但反而带出一种很强的神秘感。",
+    groupStyle: "群里几乎像没有你这个人，除非特别必要，否则基本不出声。",
+    chatStyle: "私聊回复慢且少字，很多时候像系统通知而不是聊天。",
+    impression: "朋友觉得你神秘、难约、难猜你在想什么，但又有点独特吸引力。",
+    quote: "“。”",
+    profileStyle: "你的账号可能像一座半废弃遗址，头像签名都像多年未动。"
+  }
 };
 
 // =========================
-// 页面逻辑：一般不用动
+// 页面逻辑
 // =========================
 
 document.title = TEST_TITLE;
+
+const pageTitle = document.getElementById("pageTitle");
 const heroSection = document.getElementById("heroSection");
 const quizSection = document.getElementById("quizSection");
 const resultSection = document.getElementById("resultSection");
@@ -1071,31 +569,57 @@ const startBtn = document.getElementById("startBtn");
 const restartBtnTop = document.getElementById("restartBtnTop");
 const restartBtnBottom = document.getElementById("restartBtnBottom");
 const copyBtn = document.getElementById("copyBtn");
+
 const questionCounter = document.getElementById("questionCounter");
 const progressFill = document.getElementById("progressFill");
 const dimensionTag = document.getElementById("dimensionTag");
 const questionText = document.getElementById("questionText");
 const optionsBox = document.getElementById("optionsBox");
+
 const resultType = document.getElementById("resultType");
 const resultNickname = document.getElementById("resultNickname");
 const resultDescription = document.getElementById("resultDescription");
+const resultQuote = document.getElementById("resultQuote");
+const resultGroupStyle = document.getElementById("resultGroupStyle");
+const resultChatStyle = document.getElementById("resultChatStyle");
+const resultImpression = document.getElementById("resultImpression");
+const resultProfileStyle = document.getElementById("resultProfileStyle");
 const dimensionScores = document.getElementById("dimensionScores");
+const resultImage = document.getElementById("resultImage");
+const resultImagePlaceholder = document.getElementById("resultImagePlaceholder");
+
+if (pageTitle) {
+  pageTitle.textContent = TEST_TITLE;
+}
 
 let currentQuestionIndex = 0;
 let scores = {
-  E: 0,
-  I: 0,
-  S: 0,
-  N: 0,
+  G: 0,
+  L: 0,
   T: 0,
-  F: 0,
-  J: 0,
-  P: 0
+  E: 0,
+  P: 0,
+  D: 0,
+  O: 0,
+  C: 0
 };
+
+function resetScores() {
+  scores = {
+    G: 0,
+    L: 0,
+    T: 0,
+    E: 0,
+    P: 0,
+    D: 0,
+    O: 0,
+    C: 0
+  };
+}
 
 function startQuiz() {
   currentQuestionIndex = 0;
-  scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+  resetScores();
 
   heroSection.classList.add("hidden");
   resultSection.classList.add("hidden");
@@ -1104,24 +628,36 @@ function startQuiz() {
   renderQuestion();
 }
 
+function applyAnswer(type, weight) {
+  if (weight > 0) {
+    scores[type] += weight;
+    return;
+  }
+
+  if (weight < 0) {
+    scores[OPPOSITE_TYPES[type]] += Math.abs(weight);
+  }
+}
+
 function renderQuestion() {
   const current = QUESTIONS[currentQuestionIndex];
   const total = QUESTIONS.length;
-  const progress = ((currentQuestionIndex) / total) * 100;
+  const progress = (currentQuestionIndex / total) * 100;
 
   questionCounter.textContent = `第 ${currentQuestionIndex + 1} / ${total} 题`;
   progressFill.style.width = `${progress}%`;
-  dimensionTag.textContent = `维度：${current.dimension[0]} / ${current.dimension[1]}`;
+  dimensionTag.textContent = HIDDEN_DIMENSION_LABEL;
   questionText.textContent = current.text;
 
   optionsBox.innerHTML = "";
 
-  current.options.forEach((option) => {
+  RESPONSE_OPTIONS.forEach((option) => {
     const btn = document.createElement("button");
     btn.className = "option-btn";
     btn.textContent = option.text;
+
     btn.addEventListener("click", () => {
-      scores[option.type] += 1;
+      applyAnswer(current.type, option.weight);
       currentQuestionIndex += 1;
 
       if (currentQuestionIndex < QUESTIONS.length) {
@@ -1130,22 +666,45 @@ function renderQuestion() {
         showResult();
       }
     });
+
     optionsBox.appendChild(btn);
   });
 }
 
 function getFinalType() {
-  const ei = scores.E >= scores.I ? "E" : "I";
-  const sn = scores.S >= scores.N ? "S" : "N";
-  const tf = scores.T >= scores.F ? "T" : "F";
-  const jp = scores.J >= scores.P ? "J" : "P";
-  return `${ei}${sn}${tf}${jp}`;
+  const gl = scores.G >= scores.L ? "G" : "L";
+  const te = scores.T >= scores.E ? "T" : "E";
+  const pd = scores.P >= scores.D ? "P" : "D";
+  const oc = scores.O >= scores.C ? "O" : "C";
+  return `${gl}${te}${pd}${oc}`;
 }
 
 function percentage(a, b) {
   const total = a + b;
   if (total === 0) return "50%";
   return `${Math.round((a / total) * 100)}%`;
+}
+
+function getResultImagePath(type) {
+  return `assets/images/types/${type.toLowerCase()}.png`;
+}
+
+function applyResultImage(type) {
+  const imagePath = getResultImagePath(type);
+
+  resultImage.style.display = "none";
+  resultImagePlaceholder.style.display = "grid";
+  resultImage.src = imagePath;
+
+  resultImage.onload = () => {
+    resultImage.style.display = "block";
+    resultImagePlaceholder.style.display = "none";
+  };
+
+  resultImage.onerror = () => {
+    resultImage.style.display = "none";
+    resultImagePlaceholder.style.display = "grid";
+  };
 }
 
 function showResult() {
@@ -1155,39 +714,57 @@ function showResult() {
 
   const type = getFinalType();
   const result = RESULT_MAP[type] || {
-    nickname: "自定义类型",
-    description: "你可以在 script.js 的 RESULT_MAP 中修改这个类型的文案说明。"
+    nickname: "未定义人格",
+    description: "这个人格的文案还没写好，你可以继续在 RESULT_MAP 里补充。",
+    groupStyle: "暂无",
+    chatStyle: "暂无",
+    impression: "暂无",
+    quote: "“...”",
+    profileStyle: "暂无"
   };
 
   resultType.textContent = type;
   resultNickname.textContent = result.nickname;
   resultDescription.textContent = result.description;
+  resultQuote.textContent = result.quote;
+  resultGroupStyle.textContent = result.groupStyle;
+  resultChatStyle.textContent = result.chatStyle;
+  resultImpression.textContent = result.impression;
+  resultProfileStyle.textContent = result.profileStyle;
 
   dimensionScores.innerHTML = `
     <div class="score-item">
-      <strong>E / I</strong>
-      E：${scores.E} 分（${percentage(scores.E, scores.I)}）｜I：${scores.I} 分（${percentage(scores.I, scores.E)}）
+      <strong>G / L · 群聊存在方式</strong>
+      G：${scores.G} 分（${percentage(scores.G, scores.L)}）｜L：${scores.L} 分（${percentage(scores.L, scores.G)}）
     </div>
     <div class="score-item">
-      <strong>S / N</strong>
-      S：${scores.S} 分（${percentage(scores.S, scores.N)}）｜N：${scores.N} 分（${percentage(scores.N, scores.S)}）
+      <strong>T / E · 表达介质偏好</strong>
+      T：${scores.T} 分（${percentage(scores.T, scores.E)}）｜E：${scores.E} 分（${percentage(scores.E, scores.T)}）
     </div>
     <div class="score-item">
-      <strong>T / F</strong>
-      T：${scores.T} 分（${percentage(scores.T, scores.F)}）｜F：${scores.F} 分（${percentage(scores.F, scores.T)}）
+      <strong>P / D · 社交温度</strong>
+      P：${scores.P} 分（${percentage(scores.P, scores.D)}）｜D：${scores.D} 分（${percentage(scores.D, scores.P)}）
     </div>
     <div class="score-item">
-      <strong>J / P</strong>
-      J：${scores.J} 分（${percentage(scores.J, scores.P)}）｜P：${scores.P} 分（${percentage(scores.P, scores.J)}）
+      <strong>O / C · 网络气质</strong>
+      O：${scores.O} 分（${percentage(scores.O, scores.C)}）｜C：${scores.C} 分（${percentage(scores.C, scores.O)}）
     </div>
   `;
+
+  applyResultImage(type);
 }
 
 function copyResult() {
   const type = resultType.textContent;
   const nickname = resultNickname.textContent;
   const desc = resultDescription.textContent;
-  const text = `我的 MBTI 测评结果：${type}（${nickname}）\n${desc}`;
+  const groupStyle = resultGroupStyle.textContent;
+  const impression = resultImpression.textContent;
+
+  const text = `我的 QQTI 结果：${type}（${nickname}）
+${desc}
+群聊状态：${groupStyle}
+朋友眼中的我：${impression}`;
 
   navigator.clipboard.writeText(text)
     .then(() => {
@@ -1201,11 +778,14 @@ function copyResult() {
     });
 }
 
-startBtn.addEventListener("click", startQuiz);
-restartBtnTop.addEventListener("click", () => {
+function backToHome() {
   quizSection.classList.add("hidden");
   resultSection.classList.add("hidden");
   heroSection.classList.remove("hidden");
-});
+  progressFill.style.width = "0%";
+}
+
+startBtn.addEventListener("click", startQuiz);
+restartBtnTop.addEventListener("click", backToHome);
 restartBtnBottom.addEventListener("click", startQuiz);
 copyBtn.addEventListener("click", copyResult);

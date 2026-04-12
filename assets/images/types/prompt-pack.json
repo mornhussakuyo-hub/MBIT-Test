@@ -1,0 +1,94 @@
+{
+  "tool_mode_note": "Built-in image generation tool is unavailable in this session, so this file stores ready-to-use prompts for the 16 QQTI type images.",
+  "output_pattern": "assets/images/types/{type}.png",
+  "aspect_ratio": "3:4",
+  "shared_style": "MBTI-inspired character illustration, polished anime-style editorial portrait, single human character only, centered composition, upper-body or three-quarter portrait, soft studio lighting, clean soft gradient background only, no props, no furniture, no scenery, no icons, no letters, no words, no speech bubbles, no watermark, no border, no collage, no extra characters, expressive face and pose, detailed hair and clothing, high-quality digital painting.",
+  "shared_constraints": [
+    "The image must contain only one human character.",
+    "No text of any kind anywhere in the image.",
+    "No objects, no pets, no background scene, only a simple abstract gradient backdrop.",
+    "Keep the visual language consistent across all 16 images."
+  ],
+  "prompts": [
+    {
+      "type": "gtpo",
+      "nickname": "群聊烟花型",
+      "prompt": "Create a MBTI-inspired character illustration. Single human character only. An energetic, outgoing young person with bright eyes, confident smile, lively open posture, one hand slightly lifted as if joining a conversation at exactly the right moment. Warm orange and peach palette, stylish modern casual outfit, charismatic but friendly presence. Clean soft gradient background only. No text, no symbols, no props, no extra objects."
+    },
+    {
+      "type": "gtpc",
+      "nickname": "文字话痨型",
+      "prompt": "Create a MBTI-inspired character illustration. Single human character only. A talkative, thoughtful young person with intelligent eyes, composed smile, expressive hand gesture, calm confidence, bookish but social aura. Warm beige and cinnamon palette, neat layered outfit with refined details, articulate and approachable vibe. Clean soft gradient background only. No text, no symbols, no props, no extra objects."
+    },
+    {
+      "type": "gtdo",
+      "nickname": "热闹围观指挥官",
+      "prompt": "Create a MBTI-inspired character illustration. Single human character only. A sharp, socially aware young person with a playful smirk, relaxed but commanding posture, slightly raised chin, watching the crowd without fully stepping in emotionally. Copper, amber, and muted red palette, polished street-fashion styling, magnetic and strategic vibe. Clean soft gradient background only. No text, no symbols, no props, no extra objects."
+    },
+    {
+      "type": "gtdc",
+      "nickname": "冷面群聊驻民",
+      "prompt": "Create a MBTI-inspired character illustration. Single human character only. A reserved but present young person with calm eyes, neutral expression, straight posture, subtle self-possession, someone who speaks only when it matters. Muted brown, cream, and dusty charcoal palette, minimal clean outfit, cool and grounded aura. Clean soft gradient background only. No text, no symbols, no props, no extra objects."
+    },
+    {
+      "type": "gepo",
+      "nickname": "表情包气氛核心",
+      "prompt": "Create a MBTI-inspired character illustration. Single human character only. A lively, humorous young person with animated expression, sparkling eyes, mischievous grin, slightly exaggerated playful pose, internet-native charm. Apricot, coral, and honey palette, trendy casual outfit with fun silhouette, high-energy emotional expressiveness. Clean soft gradient background only. No text, no symbols, no props, no extra objects."
+    },
+    {
+      "type": "gepc",
+      "nickname": "抽象包收藏家",
+      "prompt": "Create a MBTI-inspired character illustration. Single human character only. A funny, observant young person with relaxed smile, soft amused eyes, casual posture, low-pressure friendly vibe, feels like someone who always has the perfect reaction image ready. Warm sand, peach, and muted olive palette, comfortable layered outfit, easygoing and clever mood. Clean soft gradient background only. No text, no symbols, no props, no extra objects."
+    },
+    {
+      "type": "gedo",
+      "nickname": "高冷整活王",
+      "prompt": "Create a MBTI-inspired character illustration. Single human character only. A cool, stylish young person with aloof expression, subtle half-smile, sharp gaze, relaxed asymmetrical pose, someone who is funny only when they choose to be. Smoked brown, rust, and dark amber palette, sleek fashion-forward outfit, detached but striking presence. Clean soft gradient background only. No text, no symbols, no props, no extra objects."
+    },
+    {
+      "type": "gedc",
+      "nickname": "幽灵梗图投放器",
+      "prompt": "Create a MBTI-inspired character illustration. Single human character only. A mysterious, elusive young person with slightly sleepy eyes, faint knowing smile, understated pose, quiet but memorable aura, appears briefly and leaves a strong impression. Dusty taupe, faded rose, and muted gray palette, soft oversized outfit, ghostlike internet presence. Clean soft gradient background only. No text, no symbols, no props, no extra objects."
+    },
+    {
+      "type": "ltpo",
+      "nickname": "私聊小太阳",
+      "prompt": "Create a MBTI-inspired character illustration. Single human character only. A warm, gentle young person with sincere eyes, soft bright smile, welcoming posture, emotional openness, quiet but deeply caring presence. Golden cream, warm peach, and light caramel palette, cozy clothing, intimate and trustworthy mood. Clean soft gradient background only. No text, no symbols, no props, no extra objects."
+    },
+    {
+      "type": "ltpc",
+      "nickname": "温和长消息型",
+      "prompt": "Create a MBTI-inspired character illustration. Single human character only. A calm, thoughtful young person with steady gaze, soft composed smile, relaxed posture, introspective warmth, the kind of person who expresses care through long sincere words. Warm ivory, tea brown, and dusty beige palette, neat modest outfit, gentle intellectual aura. Clean soft gradient background only. No text, no symbols, no props, no extra objects."
+    },
+    {
+      "type": "ltdo",
+      "nickname": "礼貌已读型",
+      "prompt": "Create a MBTI-inspired character illustration. Single human character only. A polite, emotionally contained young person with reserved expression, straight posture, subtle distance, neat appearance, kind but not very available. Soft gray-brown, cream, and muted bronze palette, tidy minimal outfit, restrained and self-controlled mood. Clean soft gradient background only. No text, no symbols, no props, no extra objects."
+    },
+    {
+      "type": "ltdc",
+      "nickname": "深海信件型",
+      "prompt": "Create a MBTI-inspired character illustration. Single human character only. A deep, quiet young person with introspective eyes, almost expressionless face, calm inward posture, emotionally hidden but meaningful presence, like someone who speaks rarely but seriously. Cool taupe, deep brown, and pale ash palette, simple elegant clothing, quiet depth and distance. Clean soft gradient background only. No text, no symbols, no props, no extra objects."
+    },
+    {
+      "type": "lepo",
+      "nickname": "表情软糖型",
+      "prompt": "Create a MBTI-inspired character illustration. Single human character only. A cute, soft, emotionally responsive young person with bright gentle eyes, sweet smile, approachable posture, light and friendly charm. Pastel apricot, cream, and blush palette, soft rounded clothing shapes, airy and comforting mood. Clean soft gradient background only. No text, no symbols, no props, no extra objects."
+    },
+    {
+      "type": "lepc",
+      "nickname": "贴图陪伴型",
+      "prompt": "Create a MBTI-inspired character illustration. Single human character only. A mellow, companionable young person with calm smile, kind eyes, relaxed posture, low-key but reassuring emotional presence. Warm oatmeal, soft peach, and muted rose palette, comfortable everyday outfit, understated and cozy mood. Clean soft gradient background only. No text, no symbols, no props, no extra objects."
+    },
+    {
+      "type": "ledo",
+      "nickname": "冷淡猫猫型",
+      "prompt": "Create a MBTI-inspired character illustration. Single human character only. A dry, cool young person with half-lidded eyes, restrained expression, slight tilt of the head, emotionally minimal but not hostile, elegant detached charm. Muted mocha, dusty gray, and warm cream palette, sleek simple outfit, aloof catlike vibe. Clean soft gradient background only. No text, no symbols, no props, no extra objects."
+    },
+    {
+      "type": "ledc",
+      "nickname": "离线幽灵型",
+      "prompt": "Create a MBTI-inspired character illustration. Single human character only. A distant, enigmatic young person with pale quiet expression, unfocused gaze, still posture, almost absent presence, mysterious and hard to read. Faded ash brown, cool beige, and misty gray palette, understated clothing, quiet ghostlike aura. Clean soft gradient background only. No text, no symbols, no props, no extra objects."
+    }
+  ]
+}

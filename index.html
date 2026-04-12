@@ -3,25 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MBTI 测试</title>
+  <title>QQTI 原生社交人格测试</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="bg-shape bg-shape-1"></div>
   <div class="bg-shape bg-shape-2"></div>
+  <div class="bg-shape bg-shape-3"></div>
 
   <main class="container">
     <section class="hero card" id="heroSection">
-      <span class="badge">目前仅是一个静态页面</span>
-      <h1>MBTI 性格测评</h1>
+      <span class="badge">Developed by MornHus</span>
+      <h1 id="pageTitle">QQTI 原生社交人格测试</h1>
       <p class="subtitle">
-        Developed by MornHus.
+        测测你在 QQ 生态里到底是哪种人。<br />
+        你是群聊烟花、表情包核心，还是离线幽灵？
       </p>
 
       <div class="hero-grid">
         <div class="hero-item">
-          <strong>128</strong>
-          <span>道基础题</span>
+          <strong>48</strong>
+          <span>道题</span>
         </div>
         <div class="hero-item">
           <strong>4</strong>
@@ -29,8 +31,15 @@
         </div>
         <div class="hero-item">
           <strong>16</strong>
-          <span>种结果</span>
+          <span>种人格</span>
         </div>
+      </div>
+
+      <div class="dimension-preview">
+        <div class="dimension-pill">G / L · 群聊存在方式</div>
+        <div class="dimension-pill">T / E · 表达介质偏好</div>
+        <div class="dimension-pill">P / D · 社交温度</div>
+        <div class="dimension-pill">O / C · 网络气质</div>
       </div>
 
       <button id="startBtn" class="primary-btn">开始测试</button>
@@ -40,7 +49,7 @@
       <div class="quiz-top">
         <div>
           <p class="mini-title">当前进度</p>
-          <h2 id="questionCounter">第 1 / 16 题</h2>
+          <h2 id="questionCounter">第 1 / 48 题</h2>
         </div>
         <button id="restartBtnTop" class="ghost-btn">重新开始</button>
       </div>
@@ -50,22 +59,60 @@
       </div>
 
       <div class="question-box">
-        <p class="dimension-tag" id="dimensionTag">维度：E / I</p>
+        <p class="dimension-tag" id="dimensionTag">维度：隐藏</p>
         <h3 id="questionText">题目内容</h3>
+        <p class="question-tip">请根据这句描述和你的符合程度作答。</p>
       </div>
 
       <div class="options" id="optionsBox"></div>
     </section>
 
     <section class="result card hidden" id="resultSection">
-      <p class="mini-title">你的测评结果</p>
-      <h2 id="resultType">INTJ</h2>
-      <p id="resultNickname" class="result-nickname">建筑师型</p>
-      <p id="resultDescription" class="result-description"></p>
+      <div class="result-hero">
+        <div class="result-image-wrap">
+          <img id="resultImage" class="result-image" src="" alt="人格图片" />
+          <div id="resultImagePlaceholder" class="result-image-placeholder">
+            不幸的是，图片炸了
+          </div>
+        </div>
 
-      <div class="dimension-panel">
-        <h3>四维得分</h3>
-        <div id="dimensionScores" class="dimension-scores"></div>
+        <div class="result-main-info">
+          <p class="mini-title">你的 QQTI 结果</p>
+          <h2 id="resultType">GTPO</h2>
+          <p id="resultNickname" class="result-nickname">群聊烟花型</p>
+          <p id="resultDescription" class="result-description"></p>
+
+          <div class="result-quote-box">
+            <span class="quote-label">经典发言</span>
+            <p id="resultQuote" class="result-quote">“我来一句。”</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="result-traits-grid">
+        <div class="trait-card">
+          <h3>群聊状态</h3>
+          <p id="resultGroupStyle"></p>
+        </div>
+        <div class="trait-card">
+          <h3>私聊状态</h3>
+          <p id="resultChatStyle"></p>
+        </div>
+        <div class="trait-card">
+          <h3>朋友眼中的你</h3>
+          <p id="resultImpression"></p>
+        </div>
+      </div>
+
+      <div class="result-traits-grid second-grid">
+        <div class="trait-card">
+          <h3>资料卡气质</h3>
+          <p id="resultProfileStyle"></p>
+        </div>
+        <div class="trait-card span-2">
+          <h3>四维得分</h3>
+          <div id="dimensionScores" class="dimension-scores"></div>
+        </div>
       </div>
 
       <div class="result-actions">
@@ -74,8 +121,6 @@
       </div>
     </section>
   </main>
-
-
 
   <script src="script.js"></script>
 </body>
